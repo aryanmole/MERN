@@ -3,7 +3,8 @@ import React from 'react';
 function App() {
     return (
         <div>
-            <h1>Hello World</h1>
+            <h1 style={{color: "red"}}>Hello Style!</h1>
+      <p>Add a little style!</p>
         </div>
     );
 }
