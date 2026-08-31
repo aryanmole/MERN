@@ -1,4 +1,5 @@
 import Button from '@mui/material/Button';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -15,7 +16,16 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Tooltip from '@mui/material/Tooltip';
 import Icon from '@mui/material/Icon';
 import Switch from '@mui/material/Switch';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+import Popover from '@mui/material/Popover';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
 
+function handleBreadcrumbClick(event) {
+  event.preventDefault();
+  console.info('You clicked a breadcrumb.');
+}
 function App() {
   const theme = createTheme({
     palette: {
@@ -24,6 +34,19 @@ function App() {
       },
     },
   });
+const label = { slotProps: { input: { 'aria-label': 'Switch demo' } } };
+ const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
 
   return (
     <ThemeProvider theme={theme}>
@@ -91,9 +114,44 @@ function App() {
           </Box>
       </div>
       <div>
-        <Switch defaultChecked />
+        <Switch {...label} defaultChecked />
+        
       </div>
+      <div>
+      <Button aria-describedby={id} variant="contained" onClick={handleClick}>
+        Open Popover
+      </Button>
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
+      </Popover>
+    </div>
+ <div role="presentation" onClick={handleBreadcrumbClick}>
+      <Breadcrumbs aria-label="breadcrumb">
+        <Link underline="hover" color="inherit" href="/">
+          MUI
+        </Link>
+        <Link
+          underline="hover"
+          color="inherit"
+          href="/material-ui/getting-started/installation/"
+        >
+          Core
+        </Link>
+        <Typography sx={{ color: 'text.primary' }}>Breadcrumbs</Typography>
+      </Breadcrumbs>
+    </div>
     </ThemeProvider>
+    
+
   );
 }
 
